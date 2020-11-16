@@ -53,11 +53,11 @@ func getLogs(sess *session.Session, function string) []string {
 	svc := cloudwatchlogs.New(sess)
 
 	logGroupName := fmt.Sprint("/aws/lambda/", function)
-	// var limit int64 = 10
+	var limit int64 = 10
 
 	result, err := svc.DescribeLogStreams(&cloudwatchlogs.DescribeLogStreamsInput{
 		LogGroupName: &logGroupName,
-		// Limit:        &limit,
+		Limit:        &limit,
 	})
 
 	if err != nil {
