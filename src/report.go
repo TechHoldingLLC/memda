@@ -28,34 +28,43 @@ func parseLog(line string) lambdaMemory {
 	return mem
 }
 
-func report(f string, logs []string) {
+func parseLogs(w *tabwriter.Writer, f string, logs []string) {
 	colorReset := "\033[0m"
 	colorRed := "\033[31m"
-	colorCyan := "\033[36m"
 	colorGreen := "\033[32m"
 
-	w := new(tabwriter.Writer)
-	w.Init(os.Stdout, 8, 8, 0, '\t', 0)
-
-	fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorCyan), f, "Max", "Used", string(colorReset))
-
 	count := 0
+	total := 0
+	memMax := ""
 	for _, l := range logs {
 		mem := parseLog(l)
+		memMax = mem.max
 		if mem.limitReached {
 			count++
-			fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorRed), mem.requestID, mem.max, mem.used, string(colorReset))
-		} else {
-			fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorReset), mem.requestID, mem.max, mem.used, string(colorReset))
 		}
+		total++
 	}
 
-	defer fmt.Println("\n")
-
 	if count > 0 {
-		defer fmt.Printf(string(colorRed)+f+" reached its memory limit %d times"+string(colorReset)+"\n", count)
+		fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorRed), f, memMax, fmt.Sprintf("%d / %d", count, total), string(colorReset))
 	} else {
-		defer fmt.Println(string(colorGreen) + f + " never reached its memory limit" + string(colorReset))
+		fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorGreen), f, memMax, fmt.Sprintf("%d / %d", count, total), string(colorReset))
+	}
+}
+
+func report(logs []lambdaLogs) {
+	colorReset := "\033[0m"
+	colorCyan := "\033[36m"
+
+	w := new(tabwriter.Writer)
+	flags := tabwriter.AlignRight
+	w.Init(os.Stdout, 8, 8, 2, ' ', flags)
+
+	fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorCyan), "Lambda", "Max", "OOM", string(colorReset))
+	fmt.Fprintf(w, "\n %s%s\t%s\t%s\t%s", string(colorCyan), "------", "---", "---", string(colorReset))
+
+	for _, lambda := range logs {
+		parseLogs(w, lambda.name, lambda.logs)
 	}
 
 	defer fmt.Println("\n")

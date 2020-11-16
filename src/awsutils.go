@@ -49,11 +49,10 @@ func listLambdas(sess *session.Session, function string) []string {
 	return functions
 }
 
-func getLogs(sess *session.Session, function string) []string {
+func getLogs(sess *session.Session, function string, limit int64) []string {
 	svc := cloudwatchlogs.New(sess)
 
 	logGroupName := fmt.Sprint("/aws/lambda/", function)
-	var limit int64 = 10
 
 	result, err := svc.DescribeLogStreams(&cloudwatchlogs.DescribeLogStreamsInput{
 		LogGroupName: &logGroupName,
