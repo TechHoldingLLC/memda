@@ -12,15 +12,6 @@ type lambdaLogs struct {
 	logs []string
 }
 
-func printHeader() {
-	fmt.Println("                           _       ")
-	fmt.Println("  /\\/\\   ___ _ __  ___  __| | __ _ ")
-	fmt.Println(" /    \\ / _ \\ '_ \\` _ \\/ _\\`|/ _\\`|")
-	fmt.Println("/ /\\/\\ \\  __/ | | | | | (_| | (_| |")
-	fmt.Println("\\/    \\/\\___|_| |_| |_|\\__,_|\\__,_|")
-	fmt.Println("                                   ")
-}
-
 func parseArgs() (string, string, string, int64) {
 	profile := flag.String("profile", "", "aws profile to use")
 	region := flag.String("region", "", "aws region override")

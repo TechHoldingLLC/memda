@@ -69,7 +69,12 @@ func getLogs(sess *session.Session, function string, limit int64) []string {
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		switch err := err.(type) {
+		case *cloudwatchlogs.ResourceNotFoundException:
+			fmt.Printf("\nCannot find the log group: %s\n", logGroupName)
+		default:
+			log.Fatal(err)
+		}
 	}
 
 	logStreamNames := []string{}
