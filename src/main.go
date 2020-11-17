@@ -79,7 +79,7 @@ func main() {
 		fmt.Printf("\rGetting logs: %d / %d", i+1, totalFunctions)
 		logs = append(logs, lambdaLogs{f, getLogs(sess, f, limit)})
 	}
-	fmt.Println("")
+	fmt.Println("\nParsing logs...")
 
 	report(logs)
 }

@@ -34,13 +34,22 @@ func listLambdas(sess *session.Session, function string) []string {
 	functions := []string{}
 
 	if function == "all" {
-		result, err := svc.ListFunctions(nil)
-		if err != nil {
-			log.Fatal("Cannot list functions")
-		}
+		marker := "start"
+		for marker != "" {
+			listFunctionsConfig := &lambda.ListFunctionsInput{}
+			if marker != "start" {
+				listFunctionsConfig.Marker = &marker
+			}
 
-		for _, f := range result.Functions {
-			functions = append(functions, aws.StringValue(f.FunctionName))
+			result, err := svc.ListFunctions(listFunctionsConfig)
+			if err != nil {
+				log.Fatal("Cannot list functions")
+			}
+			marker = aws.StringValue(result.NextMarker)
+
+			for _, f := range result.Functions {
+				functions = append(functions, aws.StringValue(f.FunctionName))
+			}
 		}
 	} else {
 		functions = append(functions, function)
