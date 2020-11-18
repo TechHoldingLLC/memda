@@ -3,7 +3,7 @@
 AWS Lambda Memory
 Check what lambda run out of memory
 
-You can either scan all you lambdas or provide a function name to check if you ran out of memory.
+You can either scan all your lambdas or provide a function name to check if you ran out of memory.
 Memda relies on a ~/.aws/credentials and / or ~/.aws/config
 
 ## Installation

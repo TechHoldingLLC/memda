@@ -67,6 +67,6 @@ func report(logs []lambdaLogs) {
 		parseLogs(w, lambda.name, lambda.logs)
 	}
 
-	defer fmt.Println("\n")
+	defer fmt.Print("\n\n")
 	defer w.Flush()
 }
