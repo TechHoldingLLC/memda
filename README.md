@@ -9,11 +9,11 @@ Memda relies on a ~/.aws/credentials and / or ~/.aws/config
 ## Installation
 
 ```sh
-brew install ctrlaltdev/tap/memda
+brew install TechHoldingLLC/tap/memda
 ```
 or 
 ```sh
-brew tap ctrlaltdev/tap
+brew tap TechHoldingLLC/tap
 brew install memda
 ```
 
