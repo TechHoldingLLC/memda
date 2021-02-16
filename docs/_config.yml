@@ -2,5 +2,4 @@ remote_theme: TechHoldingLLC/labs-theme
 repository: TechHoldingLLC/memda
 title: Memda
 description: >
-  Lambda Memory Check 
-image: assets/img/memda.png
+  Lambda Memory Check
