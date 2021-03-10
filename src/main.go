@@ -1,4 +1,4 @@
-package memda
+package main
 
 import (
 	"flag"
