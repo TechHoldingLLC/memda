@@ -1,5 +1,5 @@
-module memda
+module github.com/techholdingllc/memda
 
-go 1.15
+go 1.16
 
-require github.com/aws/aws-sdk-go v1.35.30
+require github.com/aws/aws-sdk-go v1.37.27
